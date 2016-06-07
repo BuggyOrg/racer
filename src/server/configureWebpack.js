@@ -1,11 +1,6 @@
-import express from 'express'
-import bodyParser from 'body-parser'
 import path from 'path'
 
-const app = express()
-app.use(bodyParser.text({ limit: '1MB' }))
-
-{
+export default function (app) {
   const webpack = require('webpack')
   const webpackMiddleware = require('webpack-dev-middleware')
   const webpackHotMiddleware = require('webpack-hot-middleware')
@@ -32,8 +27,3 @@ app.use(bodyParser.text({ limit: '1MB' }))
     res.end()
   })
 }
-
-const port = process.env.PORT || 3000
-app.listen(port, () => {
-  console.log(`listening on port ${port}`)
-})
