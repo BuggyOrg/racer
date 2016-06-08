@@ -1,20 +1,18 @@
 import * as React from 'react'
-import RefreshIndicator from 'material-ui/RefreshIndicator'
+import LinearProgress from 'material-ui/LinearProgress'
 
 export default function (props) {
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <RefreshIndicator
-        loadingColor='rgb(76, 175, 80)'
-        size={50}
-        left={-25}
-        top={48}
+    <div style={props.style}>
+      {props.loading ? <LinearProgress
+        color='#FFCA28'
         status={props.loading ? 'loading' : 'hide'}
         style={{
           zIndex: 42,
-          marginLeft: '50%'
+          marginBottom: -4,
+          background: 'transparent'
         }}
-      />
+      /> : null}
       {props.children}
     </div>
   )

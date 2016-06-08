@@ -51,7 +51,16 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
+    "@buggyorg/component-library": "^0.3.6",
+    "@buggyorg/gogen": "^0.2.3",
+    "@buggyorg/graphify": "^0.1.15",
+    "@buggyorg/graphlib2kgraph": "^0.1.8",
+    "@buggyorg/lisgy": "^0.1.1",
+    "@buggyorg/resolve": "^0.1.20",
+    "body-parser": "^1.15.1",
     "express": "^4.13.4",
+    "graphlib": "^2.1.0",
+    "lodash": "^4.13.1",
     "material-ui": "^0.15.0",
     "materialdesign-webfont-material-ui": "^1.0.0",
     "qwest": "^4.4.2",

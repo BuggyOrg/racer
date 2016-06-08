@@ -40,29 +40,30 @@ export default class extends React.Component {
             style={{ height: '100%' }}
           >
             <LoadingPanel
-              loading={this.props.jsonLoading}
+              loading={this.props.unresolvedGraphLoading}
+              style={{ height: 'calc(100% - 53px)', width: '100%' }}
             >
               <JsonEditor
                 uniqueId='sidebarJson'
-                style={{ height: '100%' }}
                 readOnly
-                value={this.props.json}
+                value={JSON.stringify(this.props.unresolvedGraph || {}, null, 2)}
               />
             </LoadingPanel>
             <LoadingPanel
-              loading={this.props.resolvedJsonLoading}
+              loading={this.props.resolvedGraphLoading}
+              style={{ height: 'calc(100% - 53px)', width: '100%' }}
             >
               <JsonEditor
                 uniqueId='sidebarResolvedJson'
-                style={{ height: '100%' }}
                 readOnly
-                value={this.props.resolvedJson}
+                value={JSON.stringify(this.props.resolvedGraph || {}, null, 2)}
               />
             </LoadingPanel>
             <LoadingPanel
-              loading={this.props.svgLoading}
+              style={{ height: 'calc(100% - 53px)', width: '100%' }}
+              loading={this.props.controlFlowGraphLoading}
             >
-              <code>// TODO</code>
+              <span dangerouslySetInnerHTML={{__html: this.props.controlFlowGraph}} />
             </LoadingPanel>
           </SwipeableViews>
         </div>
