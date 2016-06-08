@@ -1,10 +1,12 @@
 import * as React from 'react'
 import AppBar from 'material-ui/AppBar'
-import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import racerTheme from './theme'
+import BuggyIcon from './icons/BuggyIcon'
+import IconButton from 'material-ui/IconButton'
 
-const darkMuiTheme = getMuiTheme(lightBaseTheme)
+const darkMuiTheme = getMuiTheme(racerTheme)
 
 export default class extends React.Component {
   render () {
@@ -12,7 +14,8 @@ export default class extends React.Component {
       <MuiThemeProvider muiTheme={darkMuiTheme}>
         <div>
           <AppBar
-             title="Racer"
+            title='Buggy Racer'
+            iconElementLeft={<IconButton><BuggyIcon color='#fff' /></IconButton>}
            />
           <div>
             {this.props.children}
