@@ -5,8 +5,7 @@
   "main": "lib/server/index.js",
   "scripts": {
     "start": "node lib/server/index.js",
-    "build": "babel src/server -d lib/server",
-    "prepublish": "babel src/server -d lib/server",
+    "build": "babel src/server -d lib/server && webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Maik Marschner",
