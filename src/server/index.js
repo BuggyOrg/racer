@@ -1,5 +1,7 @@
 import express from 'express'
 import bodyParser from 'body-parser'
+import path from 'path'
+import fs from 'fs'
 import configureWebpack from './configureWebpack'
 
 import { parse_to_json as parseLisgy } from '@buggyorg/lisgy'
@@ -40,7 +42,16 @@ app.post('/api/lisgy/parse', (req, res) => {
   })
 })
 
-configureWebpack(app)
+if (process.env.NODE_ENV !== 'production') {
+  console.log('running in development environment')
+  configureWebpack(app)
+} else {
+  app.use(express.static(path.join(__dirname, '..', '..', 'build')))
+  app.get('*', (req, res) => {
+    res.write(fs.readFileSync(path.join(__dirname, '..', '..', 'build', 'index.html')))
+    res.end()
+  })
+}
 
 const port = process.env.PORT || 3000
 app.listen(port, () => {
