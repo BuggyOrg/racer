@@ -14,6 +14,8 @@ import { convertGraph as asKGraph } from '@buggyorg/graphlib2kgraph'
 const app = express()
 app.use(bodyParser.text({ limit: '1MB' }))
 
+const componentLibrary = library(process.env.BUGGY_COMPONENT_LIBRARY_HOST || 'http://localhost:9200')
+
 app.post('/api/lisgy/parse', (req, res) => {
   if (!req.body) {
     return res.status(400).end()
@@ -23,18 +25,19 @@ app.post('/api/lisgy/parse', (req, res) => {
   .then((graph) => {
     if (req.query.type === 'unresolved') {
       res.json(graphlib.json.write(graph)).end()
+    } else {
+      return buggyResolve(graph, componentLibrary.get)
+      .then((graph) => {
+        if (req.query.type === 'svg') {
+          return graphify(asKGraph(graph))
+          .then((svg) => res.header('Content-Type', 'image/svg+xml').send(svg).end())
+        } else if (req.query.type === 'go') {
+          // TODO
+        } else {
+          res.json(graphlib.json.write(graph)).end()
+        }
+      })
     }
-    return buggyResolve(graph, library(process.env.BUGGY_COMPONENT_LIBRARY_HOST || 'http://localhost:9200').get)
-    .then((graph) => {
-      if (req.query.type === 'svg') {
-        return graphify(asKGraph(graph))
-        .then((svg) => res.header('Content-Type', 'image/svg+xml').send(svg).end())
-      } else if (req.query.type === 'go') {
-        // TODO
-      } else {
-        res.json(graphlib.json.write(graph)).end()
-      }
-    })
   })
   .catch((err) => {
     console.error(err)
