@@ -37,11 +37,12 @@ export default class extends React.Component {
             index={this.state.slideIndex}
             onChangeIndex={this.handleChange}
             containerStyle={{ height: '100%' }}
+            slideStyle={{ height: 'calc(100% - 48px)' }}
             style={{ height: '100%' }}
           >
             <LoadingPanel
               loading={this.props.unresolvedGraphLoading}
-              style={{ height: 'calc(100% - 53px)', width: '100%' }}
+              style={{ height: '100%', width: '100%' }}
             >
               <JsonEditor
                 uniqueId='sidebarJson'
@@ -51,7 +52,7 @@ export default class extends React.Component {
             </LoadingPanel>
             <LoadingPanel
               loading={this.props.resolvedGraphLoading}
-              style={{ height: 'calc(100% - 53px)', width: '100%' }}
+              style={{ height: '100%', width: '100%' }}
             >
               <JsonEditor
                 uniqueId='sidebarResolvedJson'
@@ -60,7 +61,7 @@ export default class extends React.Component {
               />
             </LoadingPanel>
             <LoadingPanel
-              style={{ height: 'calc(100% - 53px)', width: '100%' }}
+              style={{ height: '100%', width: '100%' }}
               loading={this.props.controlFlowGraphLoading}
             >
               <span dangerouslySetInnerHTML={{__html: this.props.controlFlowGraph}} />

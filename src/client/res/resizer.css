@@ -2,7 +2,7 @@
     height: calc(100% - 64px) !important;
 }
 
-Pane.vertical {
+.Pane.vertical {
     height: 100%;
 }
 
