@@ -52,7 +52,7 @@
   "dependencies": {
     "@buggyorg/component-library": "^0.3.6",
     "@buggyorg/gogen": "^0.2.3",
-    "@buggyorg/graphify": "^0.1.15",
+    "@buggyorg/graphify": "^0.1.22",
     "@buggyorg/graphlib2kgraph": "^0.1.8",
     "@buggyorg/lisgy": "^0.1.1",
     "@buggyorg/resolve": "^0.1.20",
