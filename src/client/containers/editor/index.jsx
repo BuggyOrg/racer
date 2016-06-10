@@ -1,8 +1,9 @@
-/* global localStorage */
+/* global localStorage, FileReader */
 import * as React from 'react'
 import { connect } from 'react-redux'
 import SplitPane from 'react-split-pane'
 import { debounce } from 'lodash'
+import FileDragAndDrop from 'react-file-drag-and-drop'
 import LispEditor from '../../components/editor/LispEditor'
 import Sidebar from '../../components/editor/Sidebar'
 import '../../res/resizer.css'
@@ -19,6 +20,12 @@ class EditorContainer extends React.Component {
     this.debouncedUpdateGraphs(code)
   }
 
+  handleLispDrop (data) {
+    const reader = new FileReader()
+    reader.addEventListener('loadend', (event) => this.handleCodeChange(reader.result))
+    reader.readAsText(data.files[0], 'utf8')
+  }
+
   render () {
     const { unresolvedGraph, resolvedGraph, controlFlowGraph, code } = this.props
 
@@ -30,11 +37,13 @@ class EditorContainer extends React.Component {
           defaultSize={localStorage.getItem('splitPos') || 300}
           onChange={(size) => localStorage.setItem('splitPos', size)}
         >
-          <LispEditor
-            uniqueId='mainAceEditor'
-            onChange={(code) => this.handleCodeChange(code)}
-            value={code}
-          />
+          <FileDragAndDrop onDrop={(data) => this.handleLispDrop(data)}>
+            <LispEditor
+              uniqueId='mainAceEditor'
+              onChange={(code) => this.handleCodeChange(code)}
+              value={code}
+            />
+          </FileDragAndDrop>
           <Sidebar
             resolvedGraph={resolvedGraph.value}
             resolvedGraphLoading={resolvedGraph.loading}
