@@ -12,6 +12,7 @@ export default function (props) {
       mode='json'
       theme='github'
       name={props.uniqueId}
+      editorProps={{$blockScrolling: Infinity}}
       setOptions={{
         showFoldWidgets: true,
         foldStyle: 'markbegin'

@@ -12,7 +12,7 @@ export default function (props) {
       mode='lisp'
       theme='github'
       name={props.uniqueId}
-      editorProps={{$blockScrolling: true}}
+      editorProps={{$blockScrolling: Infinity}}
       width='100%'
       height='100%'
     />
