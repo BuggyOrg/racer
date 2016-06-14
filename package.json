@@ -1,7 +1,7 @@
 {
-  "name": "react-boilerplate",
+  "name": "@buggyorg/racer",
   "version": "0.0.0",
-  "description": "A react boilerplate project.",
+  "description": "An online code editor for Buggy.",
   "main": "lib/server/index.js",
   "scripts": {
     "start": "node lib/server/index.js",
@@ -57,6 +57,7 @@
     "@buggyorg/lisgy": "^0.1.1",
     "@buggyorg/resolve": "^0.1.20",
     "body-parser": "^1.15.1",
+    "brace": "^0.8.0",
     "express": "^4.13.4",
     "graphlib": "^2.1.0",
     "lodash": "^4.13.1",
