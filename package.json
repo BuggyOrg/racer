@@ -55,7 +55,7 @@
     "@buggyorg/graphify": "^0.1.22",
     "@buggyorg/graphlib2kgraph": "^0.1.10",
     "@buggyorg/lisgy": "^0.1.1",
-    "@buggyorg/resolve": "^0.1.20",
+    "@buggyorg/resolve": "^0.1.23",
     "body-parser": "^1.15.1",
     "brace": "^0.8.0",
     "express": "^4.13.4",
