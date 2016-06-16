@@ -6,6 +6,7 @@ import SwipeableViews from 'react-swipeable-views'
 import { inverted } from '../theme'
 import JsonEditor from './JsonEditor'
 import LoadingPanel from '../common/LoadingPanel'
+import SvgViewer from '../SvgViewer'
 
 const invertedTheme = getMuiTheme(inverted)
 
@@ -64,7 +65,10 @@ export default class extends React.Component {
               style={{ height: '100%', width: '100%' }}
               loading={this.props.controlFlowGraphLoading}
             >
-              <span dangerouslySetInnerHTML={{__html: this.props.controlFlowGraph}} />
+              <SvgViewer
+                style={{ height: '100%', width: '100%' }}
+                svg={this.props.controlFlowGraph}
+              />
             </LoadingPanel>
           </SwipeableViews>
         </div>
