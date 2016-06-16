@@ -16,6 +16,7 @@ export default class extends React.Component {
           <AppBar
             title='Buggy Racer'
             iconElementLeft={<IconButton><BuggyIcon color='#fff' /></IconButton>}
+            className='appbar'
            />
           <div>
             {this.props.children}

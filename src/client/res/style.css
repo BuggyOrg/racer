@@ -2,3 +2,7 @@ html, body {
   padding: 0;
   margin: 0;
 }
+
+.appbar {
+  display: flex; /* fix app bar issues in some chrome versions */
+}
