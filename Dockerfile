@@ -1,5 +1,10 @@
 FROM node:6.1
 
+# to create svg images, x is required for font measuring (using nightmare)
+RUN apt-get update &&\
+    apt-get install -y libgtk2.0-0 libgconf-2-4 \
+    libasound2 libxtst6 libxss1 libnss3 xvfb
+
 # create app directory
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
@@ -17,11 +22,7 @@ ENV NODE_ENV production
 # build the app
 RUN npm run build
 
-# to create svg images, x is required for font measuring (using nightmare)
 ADD entrypoint.sh .
-RUN chmod 755 ./entrypoint.sh && \
-    apt-get update &&\
-    apt-get install -y libgtk2.0-0 libgconf-2-4 \
-    libasound2 libxtst6 libxss1 libnss3 xvfb
+RUN chmod 755 ./entrypoint.sh
 
 CMD ["./entrypoint.sh"]
