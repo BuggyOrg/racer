@@ -84,6 +84,9 @@ export default class SvgViewer extends React.Component {
     const parser = new DOMParser()
     const doc = parser.parseFromString(svgString, "image/svg+xml")
     const svg = doc.querySelector('svg')
+    if (!svg) {
+      return
+    }
 
     const allElements = doc.querySelectorAll('svg > :not(defs)')
     const wrapper = doc.createElement('g')
