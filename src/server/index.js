@@ -24,7 +24,10 @@ app.post('/api/lisgy/parse', (req, res) => {
   .then((graph) => graphlib.json.read(graph))
   .then((graph) => {
     if (req.query.type === 'unresolved') {
-      res.json(graphlib.json.write(graph)).end()
+      res.json({
+        status: 'success',
+        graph: graphlib.json.write(graph)
+      }).end()
     } else {
       return buggyResolve(graph, componentLibrary.get)
       .then((graph) => {
@@ -34,14 +37,19 @@ app.post('/api/lisgy/parse', (req, res) => {
         } else if (req.query.type === 'go') {
           // TODO
         } else {
-          res.json(graphlib.json.write(graph)).end()
+          res.json({
+            status: 'success',
+            graph: graphlib.json.write(graph)
+          }).end()
         }
       })
     }
   })
   .catch((err) => {
-    console.error(err)
-    res.status(500).end()
+    res.json({
+      status: 'error',
+      error: err
+    }).end()
   })
 })
 

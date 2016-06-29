@@ -12,7 +12,6 @@ export default function (props) {
       theme='github'
       name={props.uniqueId}
       editorProps={{$blockScrolling: Infinity, $useWorker: false}}
-      onLoad={(x) => console.error(x)}
       annotations={props.annotations}
       markers={props.markers}
       width='100%'

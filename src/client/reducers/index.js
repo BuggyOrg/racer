@@ -15,10 +15,15 @@ export function code (state = '', action) {
 export function codeErrors (state = [], action) {
   switch (action.type) {
     case SET_CODE:
-      const { error, location } = checkSyntax(action.code || '')
-      return error ? [{
-        location: location,
-        message: error
+      const { errorMessage, errorLocation } = checkSyntax(action.code || '')
+      return errorMessage ? [{
+        location: {
+          startCol: errorLocation.startCol,
+          startLine: errorLocation.startLine,
+          endCol: errorLocation.endLine === errorLocation.startLine ? Math.max(errorLocation.endCol, errorLocation.startCol + 1) : errorLocation.endCol,
+          endLine: errorLocation.endLine,
+        },
+        message: errorMessage
       }] : []
     default:
       return state
