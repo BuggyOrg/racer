@@ -1,7 +1,6 @@
 import * as React from 'react'
 import brace from 'brace'
 import AceEditor from 'react-ace'
-
 import 'brace/mode/clojure'
 import 'brace/theme/github'
 
@@ -12,7 +11,10 @@ export default function (props) {
       mode='clojure'
       theme='github'
       name={props.uniqueId}
-      editorProps={{$blockScrolling: Infinity}}
+      editorProps={{$blockScrolling: Infinity, $useWorker: false}}
+      onLoad={(x) => console.error(x)}
+      annotations={props.annotations}
+      markers={props.markers}
       width='100%'
       height='100%'
     />

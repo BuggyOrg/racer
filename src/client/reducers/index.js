@@ -1,11 +1,25 @@
 import { SET_CODE, SET_RESOLVED_GRAPH, SET_RESOLVED_GRAPH_LOADING,
          SET_UNRESOLVED_GRAPH, SET_UNRESOLVED_GRAPH_LOADING,
           SET_CONTROL_FLOW_GRAPH, SET_CONTROL_FLOW_GRAPH_LOADING } from '../actions/constants'
+import { checkSyntax } from '@buggyorg/lisgy'
 
 export function code (state = '', action) {
   switch (action.type) {
     case SET_CODE:
       return action.code || ''
+    default:
+      return state
+  }
+}
+
+export function codeErrors (state = [], action) {
+  switch (action.type) {
+    case SET_CODE:
+      const { error, location } = checkSyntax(action.code || '')
+      return error ? [{
+        location: location,
+        message: error
+      }] : []
     default:
       return state
   }

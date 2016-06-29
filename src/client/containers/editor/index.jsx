@@ -41,6 +41,8 @@ class EditorContainer extends React.Component {
             <LispEditor
               uniqueId='mainAceEditor'
               onChange={(code) => this.handleCodeChange(code)}
+              annotations={this.props.codeErrors}
+              markers={this.props.codeMarkers}
               value={code}
             />
           </FileDragAndDrop>
@@ -61,6 +63,25 @@ class EditorContainer extends React.Component {
 export default connect((state) => {
   return {
     code: state.code,
+    codeErrors: state.codeErrors.map((error) => {
+      return {
+        row: error.location.startLine - 1,
+        column: error.location.startCol - 1,
+        type: 'error',
+        text: error.message
+      }
+    }),
+    codeMarkers: state.codeErrors.map((error) => {
+      return {
+        startRow: error.location.startLine - 1,
+        startCol: error.location.startCol - 1,
+        endRow: error.location.endLine - 1,
+        endCol: error.location.endCol - 1,
+        className: 'ace-marker-error',
+        type: 'background',
+        text: error.message
+      }
+    }),
     resolvedGraph: state.resolvedGraph,
     unresolvedGraph: state.unresolvedGraph,
     controlFlowGraph: state.controlFlowGraph
