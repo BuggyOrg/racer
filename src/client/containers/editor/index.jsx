@@ -34,7 +34,8 @@ class EditorContainer extends React.Component {
         <SplitPane
           split='vertical'
           minSize={200}
-          defaultSize={localStorage.getItem('splitPos') || 300}
+          maxSize={-200}
+          defaultSize={parseInt(localStorage.getItem('splitPos'), 10) || 300}
           onChange={(size) => localStorage.setItem('splitPos', size)}
         >
           <FileDragAndDrop onDrop={(data) => this.handleLispDrop(data)}>
