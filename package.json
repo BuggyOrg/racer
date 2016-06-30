@@ -53,7 +53,7 @@
     "@buggyorg/component-library": "^0.3.6",
     "@buggyorg/gogen": "^0.2.3",
     "@buggyorg/graphify": "^0.1.22",
-    "@buggyorg/graphlib2kgraph": "^0.1.10",
+    "@buggyorg/graphlib2kgraph": "^0.1.11",
     "@buggyorg/lisgy": "^0.1.6",
     "@buggyorg/resolve": "^0.1.23",
     "body-parser": "^1.15.1",
