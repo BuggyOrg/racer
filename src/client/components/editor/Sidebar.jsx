@@ -36,7 +36,7 @@ export default class extends React.Component {
           </Tabs>
           <SwipeableViews
             index={this.state.slideIndex}
-            onChangeIndex={this.handleChange}
+            onChangeIndex={(value) => this.handleChange(value)}
             containerStyle={{ height: '100%' }}
             slideStyle={{ height: 'calc(100% - 48px)' }}
             style={{ height: '100%' }}
