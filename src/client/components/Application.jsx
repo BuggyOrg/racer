@@ -14,7 +14,7 @@ export default class extends React.Component {
       <MuiThemeProvider muiTheme={darkMuiTheme}>
         <div>
           <AppBar
-            title='Buggy Racer'
+            title={<span style={{ fontSize: 18, fontWeight: 400 }}>Buggy Racer</span>}
             iconElementLeft={<IconButton><BuggyIcon color='#fff' /></IconButton>}
             className='appbar'
            />

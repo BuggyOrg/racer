@@ -3,7 +3,14 @@ import * as Colors from 'material-ui/styles/colors'
 import Spacing from 'material-ui/styles/spacing'
 import zIndex from 'material-ui/styles/zIndex'
 
+const defaults = {
+  appBar: {
+    height: 48
+  }
+}
+
 export default {
+  ...defaults,
   spacing: Spacing,
   zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
@@ -24,6 +31,7 @@ export default {
 }
 
 export const inverted = {
+  ...defaults,
   spacing: Spacing,
   zIndex: zIndex,
   fontFamily: 'Roboto, sans-serif',
