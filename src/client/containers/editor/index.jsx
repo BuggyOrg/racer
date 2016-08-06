@@ -13,6 +13,32 @@ class EditorContainer extends React.Component {
   constructor (props) {
     super(props)
     this.debouncedUpdateGraphs = debounce((code) => this.props.dispatch(compileProgram(code)), 100)
+    this.state = {
+      percentageSize: parseFloat(localStorage.getItem('splitPosRelative')) || 0.5
+    }
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize)
+    this.splitPane = null
+  }
+
+  handleResize = () => {
+    this.splitPane.setState({
+      draggedSize: this.state.percentageSize * window.innerWidth
+    })
+    this.forceUpdate()
+    localStorage.setItem('splitPosRelative', this.state.percentageSize)
+  }
+
+  onDragFinished() {
+    this.setState({
+      percentageSize: this.splitPane.state.draggedSize / window.innerWidth
+    })
   }
 
   handleCodeChange (code) {
@@ -33,10 +59,11 @@ class EditorContainer extends React.Component {
       <div>
         <SplitPane
           split='vertical'
+          ref={(splitPane) => this.splitPane = splitPane}
+          onDragFinished={() => this.onDragFinished()}
+          defaultSize={this.state.percentageSize * window.innerWidth}
           minSize={200}
           maxSize={-200}
-          defaultSize={parseInt(localStorage.getItem('splitPos'), 10) || 300}
-          onChange={(size) => localStorage.setItem('splitPos', size)}
         >
           <FileDragAndDrop onDrop={(data) => this.handleLispDrop(data)}>
             <LispEditor
