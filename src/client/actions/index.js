@@ -2,7 +2,8 @@
 import qwest from 'qwest'
 import { SET_RESOLVED_GRAPH, SET_CODE, SET_RESOLVED_GRAPH_LOADING,
          SET_UNRESOLVED_GRAPH, SET_UNRESOLVED_GRAPH_LOADING,
-         SET_CONTROL_FLOW_GRAPH, SET_CONTROL_FLOW_GRAPH_LOADING } from './constants'
+         SET_CONTROL_FLOW_GRAPH, SET_CONTROL_FLOW_GRAPH_LOADING,
+         SET_CODE_ERRORS } from './constants'
 
 export function compileProgram (code) {
   return (dispatch) => {
@@ -14,8 +15,10 @@ export function compileProgram (code) {
          .post('/api/lisgy/parse?type=svg', new Blob([code], { type: 'text/plain' }))
     .then(([[, resolved], [, unresolved], [, svg]]) => {
       if (resolved.status === 'success') {
+        dispatch({ type: SET_CODE_ERRORS, errors: []})
         dispatch({ type: SET_RESOLVED_GRAPH, graph: resolved.graph })
       } else {
+        dispatch({ type: SET_CODE_ERRORS, errors: [resolved.error]})
         dispatch({ type: SET_RESOLVED_GRAPH_LOADING, loading: false })
       }
       if (unresolved.status === 'success') {
