@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node lib/server/index.js",
     "build": "babel src/server -d lib/server && webpack",
+    "build-server": "babel src/server -d lib/server",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Maik Marschner",
