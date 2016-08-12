@@ -8,7 +8,7 @@ import { parse_to_json as parseLisgy } from '@buggyorg/lisgy'
 import library from '@buggyorg/component-library'
 import { resolve as buggyResolve } from '@buggyorg/resolve'
 import graphlib from 'graphlib'
-import graphify from '@buggyorg/graphify'
+import graphify from './forkGraphify'
 import { convertGraph as asKGraph } from '@buggyorg/graphlib2kgraph'
 
 const app = express()
