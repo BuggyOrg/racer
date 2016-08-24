@@ -6,6 +6,7 @@ import Divider from 'material-ui/Divider'
 import Folder from 'material-ui/svg-icons/file/folder'
 import Save from 'material-ui/svg-icons/content/save'
 import { connect } from 'react-redux'
+import { saveAs } from 'file-saver'
 import { setLispCode, compileProgram } from '../actions'
 
 class MainMenu extends React.Component {
@@ -40,11 +41,11 @@ class MainMenu extends React.Component {
   }
 
   handleSaveFile () {
-    console.log('save')
+    saveAs(new File([this.props.code], "code.clj", { type: 'text/plain;charset=utf-8' }))
   }
 
   handleExportGraph () {
-    console.log('export graph')
+    saveAs(new File([this.props.controlFlowGraph], "code.svg", { type: 'image/svg+xml;charset=utf-8' }))
   }
 
   render () {
@@ -64,7 +65,7 @@ class MainMenu extends React.Component {
             onTouchTap={(e) => { this.openInput.click(); e.stopPropagation() }}
           />
           <MenuItem
-            primaryText="Save as"
+            primaryText="Save"
             secondaryText="Ctrl + S"
             leftIcon={<Save />}
             onTouchTap={() => this.handleSaveFile()}
@@ -74,6 +75,7 @@ class MainMenu extends React.Component {
             primaryText="Export graph" 
             insetChildren
             onTouchTap={() => this.handleExportGraph()}
+            disabled={!this.props.controlFlowGraph}
           />
           <Divider />
           <MenuItem
@@ -101,7 +103,7 @@ class MainMenu extends React.Component {
 export default connect((state) => {
   return {
     code: state.code,
-    controlFlowGraph: state.controlFlowGraph,
+    controlFlowGraph: state.controlFlowGraph.value,
     powerMode: false
   }
 })(MainMenu)
