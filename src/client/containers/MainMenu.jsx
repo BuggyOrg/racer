@@ -7,7 +7,7 @@ import Folder from 'material-ui/svg-icons/file/folder'
 import Save from 'material-ui/svg-icons/content/save'
 import { connect } from 'react-redux'
 import { saveAs } from 'file-saver'
-import { setLispCode, compileProgram } from '../actions'
+import { setLispCode, compileProgram, togglePowerMode } from '../actions'
 
 class MainMenu extends React.Component {
   componentDidMount () {
@@ -81,8 +81,8 @@ class MainMenu extends React.Component {
           <MenuItem
             primaryText="Power mode"
             insetChildren
-            disabled
             checked={this.props.powerMode}
+            onTouchTap={() => this.props.dispatch(togglePowerMode())}
           />
         </IconMenu>
         <div
@@ -104,6 +104,6 @@ export default connect((state) => {
   return {
     code: state.code,
     controlFlowGraph: state.controlFlowGraph.value,
-    powerMode: false
+    powerMode: state.powerMode
   }
 })(MainMenu)

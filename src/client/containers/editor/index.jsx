@@ -8,6 +8,9 @@ import LispEditor from '../../components/editor/LispEditor'
 import Sidebar from '../../components/editor/Sidebar'
 import '../../res/resizer.css'
 import { setLispCode, compileProgram } from '../../actions'
+import codeBlastAce from 'code-blast-ace'
+
+let cbaInitialized = false
 
 class EditorContainer extends React.Component {
   constructor (props) {
@@ -53,6 +56,11 @@ class EditorContainer extends React.Component {
   }
 
   render () {
+    if (!cbaInitialized) {
+      cbaInitialized = true
+      codeBlastAce(window.ace)
+    }
+
     const { unresolvedGraph, resolvedGraph, controlFlowGraph, code } = this.props
 
     return (
@@ -72,6 +80,7 @@ class EditorContainer extends React.Component {
               annotations={this.props.codeErrors}
               markers={this.props.codeMarkers}
               value={code}
+              setOptions={{ blastCode: this.props.powerMode ? { effect: 1 } : false }}
             />
           </FileDragAndDrop>
           <Sidebar
@@ -112,6 +121,7 @@ export default connect((state) => {
     }),
     resolvedGraph: state.resolvedGraph,
     unresolvedGraph: state.unresolvedGraph,
-    controlFlowGraph: state.controlFlowGraph
+    controlFlowGraph: state.controlFlowGraph,
+    powerMode: state.powerMode
   }
 })(EditorContainer)

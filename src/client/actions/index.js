@@ -3,7 +3,7 @@ import qwest from 'qwest'
 import { SET_RESOLVED_GRAPH, SET_CODE, SET_RESOLVED_GRAPH_LOADING,
          SET_UNRESOLVED_GRAPH, SET_UNRESOLVED_GRAPH_LOADING,
          SET_CONTROL_FLOW_GRAPH, SET_CONTROL_FLOW_GRAPH_LOADING,
-         SET_CODE_ERRORS } from './constants'
+         SET_CODE_ERRORS, TOGGLE_POWER_MODE } from './constants'
 
 export function compileProgram (code) {
   return (dispatch) => {
@@ -42,4 +42,8 @@ export function compileProgram (code) {
 
 export function setLispCode (code) {
   return { type: SET_CODE, code }
+}
+
+export function togglePowerMode () {
+  return { type: TOGGLE_POWER_MODE }
 }
