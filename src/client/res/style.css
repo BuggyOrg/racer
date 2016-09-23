@@ -8,7 +8,7 @@ html, body {
 }
 
 .ace_editor {
-  font: 12px/normal Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   line-height: 18px;
 }
 
