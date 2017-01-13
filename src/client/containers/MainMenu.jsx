@@ -83,6 +83,7 @@ class MainMenu extends React.Component {
             insetChildren
             checked={this.props.powerMode}
             onTouchTap={() => this.props.dispatch(togglePowerMode())}
+            disabled
           />
         </IconMenu>
         <div
