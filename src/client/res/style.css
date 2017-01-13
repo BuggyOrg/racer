@@ -28,3 +28,7 @@ html, body {
 .SplitPane.vertical {
     height: calc(100% - 48px) !important;
 }
+
+.Pane.vertical {
+    overflow: hidden;
+}

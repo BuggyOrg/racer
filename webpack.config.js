@@ -1,10 +1,11 @@
-var path = require('path')
-var webpack = require('webpack')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var HtmlWebpackPlugin = require('html-webpack-plugin')
-var FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const path = require('path')
+const webpack = require('webpack')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 
-var config = {
+const config = {
   devtool: 'eval',
   entry: [
     path.join(path.join(__dirname, 'src', 'client'), 'Index.jsx')
@@ -32,7 +33,11 @@ var config = {
       inject: 'body',
       filename: 'index.html'
     }),
-    new ExtractTextPlugin('[name].css', { allChunks: true })
+    new ExtractTextPlugin('[name].css', { allChunks: true }),
+    new CopyWebpackPlugin([{
+      from: 'node_modules/monaco-editor/min/vs',
+      to: 'vs',
+    }])
   ],
   module: {
     loaders: [

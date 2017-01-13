@@ -1,24 +1,45 @@
-import * as React from 'react'
-import brace from 'brace'
-import AceEditor from 'react-ace'
+import React, { PropTypes } from 'react'
+import MonacoEditor from 'react-monaco-editor'
 
-import 'brace/mode/json'
-import 'brace/theme/github'
-
-export default function (props) {
+export default function JsonEditor (props) {
   return (
-    <AceEditor
-      {...props}
-      mode='json'
-      theme='github'
-      name={props.uniqueId}
-      editorProps={{$blockScrolling: Infinity}}
-      setOptions={{
-        showFoldWidgets: true,
-        foldStyle: 'markbegin'
+    <div
+      style={{
+        width: props.width || '100%',
+        height: props.height || '100%',
+        overflow: 'hidden'
       }}
-      width='100%'
-      height='100%'
-    />
+    >
+      <MonacoEditor
+        width={props.width || '100%'}
+        height={props.height || '100%'}
+        language='json'
+        value={props.value}
+        options={{
+          readOnly: false && props.readOnly,
+          folding: true
+        }}
+      />
+    </div>
   )
+}
+
+JsonEditor.propTypes = {
+  annotations: PropTypes.arrayOf(PropTypes.shape({
+    // TODO
+  })),
+  height: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]),
+  markers: PropTypes.arrayOf(PropTypes.shape({
+    // TODO
+  })),
+  onChange: PropTypes.func,
+  readOnly: PropTypes.bool,
+  value: PropTypes.string,
+  width: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ])
 }
