@@ -1,7 +1,11 @@
 import React, { Component, PropTypes } from 'react'
 import MonacoEditor from 'react-monaco-editor'
 
-export default class LispEditor extends Component {
+/**
+ * A wrapper for the react-monaco-editor that adds a layout method and
+ * some convenient props.
+ */
+export default class EnhancedEditor extends Component {
   constructor (props) {
     super(props)
   }
@@ -16,8 +20,15 @@ export default class LispEditor extends Component {
     this.editor = null
   }
 
+  editorDidMount = (editor, monaco) => {
+    this.editor = editor
+    if (this.props.editorDidMount) {
+      this.props.editorDidMount(editor, monaco)
+    }
+  }
+
   render () {
-    const { width, height, readOnly, value } = this.props
+    const { width, height, readOnly, value, options = {}, ...other } = this.props
 
     return (
       <div
@@ -30,22 +41,24 @@ export default class LispEditor extends Component {
         <MonacoEditor
           width={width || '100%'}
           height={height || '100%'}
-          language='lisp'
           value={value}
           options={{
-            readOnly: readOnly
+            readOnly: readOnly,
+            ...options
           }}
-          editorDidMount={(editor) => this.editor = editor}
+          editorDidMount={this.editorDidMount}
+          {...other}
         />
       </div>
     )
   }
 }
 
-LispEditor.propTypes = {
+EnhancedEditor.propTypes = {
   annotations: PropTypes.arrayOf(PropTypes.shape({
     // TODO
   })),
+  editorDidMount: PropTypes.func,
   height: PropTypes.oneOfType([
     PropTypes.string,
     PropTypes.number
@@ -54,6 +67,7 @@ LispEditor.propTypes = {
     // TODO
   })),
   onChange: PropTypes.func,
+  options: PropTypes.object,
   readOnly: PropTypes.bool,
   value: PropTypes.string,
   width: PropTypes.oneOfType([

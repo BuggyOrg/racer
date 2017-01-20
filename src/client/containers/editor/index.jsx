@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import SplitPane from 'react-split-pane'
 import { debounce } from 'lodash'
 import FileDragAndDrop from 'react-file-drag-and-drop'
-import LispEditor from '../../components/editor/LispEditor'
+import EnhancedEditor from '../../components/editor/EnhancedEditor'
 import Sidebar from '../../components/editor/Sidebar'
 import '../../res/resizer.css'
 import { setLispCode, compileProgram } from '../../actions'
@@ -74,8 +74,8 @@ class EditorContainer extends React.Component {
           maxSize={-200}
         >
           <FileDragAndDrop onDrop={(data) => this.handleLispDrop(data)}>
-            <LispEditor
-              uniqueId='mainAceEditor'
+            <EnhancedEditor
+              language='lisp'
               onChange={(code) => this.handleCodeChange(code)}
               annotations={this.props.codeErrors}
               markers={this.props.codeMarkers}

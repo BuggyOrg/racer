@@ -4,7 +4,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import SwipeableViews from 'react-swipeable-views'
 import { inverted } from '../theme'
-import JsonEditor from './JsonEditor'
+import EnhancedEditor from './EnhancedEditor'
 import LoadingPanel from '../common/LoadingPanel'
 import SvgViewer from '../SvgViewer'
 
@@ -50,9 +50,11 @@ export default class extends React.Component {
               loading={this.props.unresolvedGraphLoading}
               style={{ height: '100%', width: '100%' }}
             >
-              <JsonEditor
+              <EnhancedEditor
                 ref={(editor) => this.jsonEditor = editor}
                 uniqueId='sidebarJson'
+                language='json'
+                options={{ folding: true }}
                 readOnly
                 value={JSON.stringify(this.props.unresolvedGraph || {}, null, 2)}
               />
@@ -61,9 +63,11 @@ export default class extends React.Component {
               loading={this.props.resolvedGraphLoading}
               style={{ height: '100%', width: '100%' }}
             >
-              <JsonEditor
+              <EnhancedEditor
                 ref={(editor) => this.resolvedJsonEditor = editor}
                 uniqueId='sidebarResolvedJson'
+                language='json'
+                options={{ folding: true }}
                 readOnly
                 value={JSON.stringify(this.props.resolvedGraph || {}, null, 2)}
               />
