@@ -35,12 +35,18 @@ class EditorContainer extends React.Component {
     })
     this.forceUpdate()
     localStorage.setItem('splitPosRelative', this.state.percentageSize)
+
+    this.lispEditor.layout()
+    this.sidebar.layout()
   }
 
   onDragFinished() {
     this.setState({
       percentageSize: this.splitPane.state.draggedSize / window.innerWidth
     })
+
+    this.lispEditor.layout()
+    this.sidebar.layout()
   }
 
   handleCodeChange (code) {
@@ -74,6 +80,7 @@ class EditorContainer extends React.Component {
               annotations={this.props.codeErrors}
               markers={this.props.codeMarkers}
               value={code}
+              ref={(editor) => this.lispEditor = editor}
             />
           </FileDragAndDrop>
           <Sidebar
@@ -83,6 +90,7 @@ class EditorContainer extends React.Component {
             unresolvedGraphLoading={unresolvedGraph.loading}
             controlFlowGraph={controlFlowGraph.value}
             controlFlowGraphLoading={controlFlowGraph.loading}
+            ref={(sidebar) => this.sidebar = sidebar}
           />
         </SplitPane>
       </div>

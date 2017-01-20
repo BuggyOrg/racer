@@ -22,6 +22,11 @@ export default class extends React.Component {
     this.setState({ slideIndex: value })
   }
 
+  layout () {
+    this.jsonEditor.layout()
+    this.resolvedJsonEditor.layout()
+  }
+
   render () {
     return (
       <MuiThemeProvider muiTheme={invertedTheme}>
@@ -46,6 +51,7 @@ export default class extends React.Component {
               style={{ height: '100%', width: '100%' }}
             >
               <JsonEditor
+                ref={(editor) => this.jsonEditor = editor}
                 uniqueId='sidebarJson'
                 readOnly
                 value={JSON.stringify(this.props.unresolvedGraph || {}, null, 2)}
@@ -56,6 +62,7 @@ export default class extends React.Component {
               style={{ height: '100%', width: '100%' }}
             >
               <JsonEditor
+                ref={(editor) => this.resolvedJsonEditor = editor}
                 uniqueId='sidebarResolvedJson'
                 readOnly
                 value={JSON.stringify(this.props.resolvedGraph || {}, null, 2)}
