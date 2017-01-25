@@ -75,7 +75,7 @@ class EditorContainer extends React.Component {
         >
           <FileDragAndDrop onDrop={(data) => this.handleLispDrop(data)}>
             <EnhancedEditor
-              language='lisp'
+              language='lisgy'
               onChange={(code) => this.handleCodeChange(code)}
               annotations={this.props.codeErrors}
               markers={this.props.codeMarkers}

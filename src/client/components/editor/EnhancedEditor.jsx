@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import MonacoEditor from 'react-monaco-editor'
+import registerLisgyLanguage from './monacoIntegration/lisgy'
 
 /**
  * A wrapper for the react-monaco-editor that adds a layout method and
@@ -25,6 +26,11 @@ export default class EnhancedEditor extends Component {
     if (this.props.editorDidMount) {
       this.props.editorDidMount(editor, monaco)
     }
+
+    registerLisgyLanguage(monaco)
+    if (this.props.language === 'lisgy') {
+      monaco.editor.setModelLanguage(editor.getModel(), 'lisgy')
+    }
   }
 
   render () {
@@ -44,6 +50,7 @@ export default class EnhancedEditor extends Component {
           value={value}
           options={{
             readOnly: readOnly,
+            folding: true,
             ...options
           }}
           editorDidMount={this.editorDidMount}
