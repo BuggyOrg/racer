@@ -1,4 +1,4 @@
-FROM node:6.1
+FROM node:6
 
 # to create svg images, x is required for font measuring (using nightmare)
 RUN apt-get update &&\
