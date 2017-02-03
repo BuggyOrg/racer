@@ -3,54 +3,56 @@ import bodyParser from 'body-parser'
 import path from 'path'
 import fs from 'fs'
 import configureWebpack from './configureWebpack'
-import graphify from './forkGraphify'
 
-import { parse_to_json as parseLisgy } from '@buggyorg/lisgy'
-import library from '@buggyorg/component-library'
-import { resolve as buggyResolve } from '@buggyorg/resolve'
-import graphlib from 'graphlib'
-import { convertGraph as asKGraph } from '@buggyorg/graphlib2kgraph'
+import { connect as connectToLibrary } from '@buggyorg/library-client'
+import { run as runBuggy } from '@buggyorg/buggy'
+import * as toolchain from '@buggyorg/buggy/lib/toolchain'
+import * as NPM from '@buggyorg/buggy/lib/npm/cacheCli'
 
 const app = express()
 app.use(bodyParser.text({ limit: '1MB' }))
 
-const componentLibrary = library(process.env.BUGGY_COMPONENT_LIBRARY_HOST || 'http://localhost:9200')
+const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_COMPONENT_LIBRARY_HOST || 'http://localhost:9200'))
 
 app.post('/api/lisgy/parse', (req, res) => {
   if (!req.body) {
     return res.status(400).end()
   }
-  parseLisgy(req.body, true)
-  .then((graph) => graphlib.json.read(graph))
-  .then((graph) => {
-    if (req.query.type === 'unresolved') {
-      res.json({
-        status: 'success',
-        graph: graphlib.json.write(graph)
-      }).end()
-    } else {
-      return buggyResolve(graph, componentLibrary.get)
-      .then((graph) => {
-        if (req.query.type === 'svg') {
-          return graphify(asKGraph(graph))
-          .then((svg) => res.header('Content-Type', 'image/svg+xml').send(svg).end())
-        } else if (req.query.type === 'go') {
-          // TODO
-        } else {
-          res.json({
-            status: 'success',
-            graph: graphlib.json.write(graph)
-          }).end()
-        }
-      })
-    }
-  })
-  .catch((err) => {
-    res.json({
-      status: 'error',
-      error: err
-    }).end()
-  })
+
+  // TODO
+  runBuggy(req.body, 'json', [], toolchain, NPM)
+
+  // parseLisgy(req.body, true)
+  // .then((graph) => graphlib.json.read(graph))
+  // .then((graph) => {
+  //   if (req.query.type === 'unresolved') {
+  //     res.json({
+  //       status: 'success',
+  //       graph: graphlib.json.write(graph)
+  //     }).end()
+  //   } else {
+  //     return buggyResolve(graph, componentLibrary.get)
+  //     .then((graph) => {
+  //       if (req.query.type === 'svg') {
+  //         return graphify(asKGraph(graph))
+  //         .then((svg) => res.header('Content-Type', 'image/svg+xml').send(svg).end())
+  //       } else if (req.query.type === 'go') {
+  //         // TODO
+  //       } else {
+  //         res.json({
+  //           status: 'success',
+  //           graph: graphlib.json.write(graph)
+  //         }).end()
+  //       }
+  //     })
+  //   }
+  // })
+  // .catch((err) => {
+  //   res.json({
+  //     status: 'error',
+  //     error: err
+  //   }).end()
+  // })
 })
 
 if (process.env.NODE_ENV !== 'production') {
