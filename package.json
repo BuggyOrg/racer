@@ -49,6 +49,7 @@
   "dependencies": {
     "@buggyorg/buggy": "^0.2.0-pre.3",
     "@buggyorg/library-client": "^0.4.2",
+    "@buggyorg/lisgy": "^0.1.8",
     "body-parser": "^1.15.1",
     "express": "^4.13.4",
     "file-saver": "^1.3.2",
