@@ -5,8 +5,9 @@ import fs from 'fs'
 import configureWebpack from './configureWebpack'
 
 import { connect as connectToLibrary } from '@buggyorg/library-client'
-import { run as runBuggy } from '@buggyorg/buggy'
+import { run as runBuggy, toolchainSequence, runToolchain } from '@buggyorg/buggy'
 import * as toolchain from '@buggyorg/buggy/lib/toolchain'
+import * as toolchainGen from '@buggyorg/buggy/lib/toolchainGen'
 import * as NPM from '@buggyorg/buggy/lib/npm/cacheCli'
 
 const app = express()
@@ -14,45 +15,44 @@ app.use(bodyParser.text({ limit: '1MB' }))
 
 const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_COMPONENT_LIBRARY_HOST || 'http://localhost:9200'))
 
+// cache the toolchains
+let lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
+let lisgyToResolvedPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM)
+let lisgyToSvgToolchain = toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM)
+
 app.post('/api/lisgy/parse', (req, res) => {
   if (!req.body) {
     return res.status(400).end()
   }
 
-  // TODO
-  runBuggy(req.body, 'json', [], toolchain, NPM)
+  let toolchain
+  if (req.query.type === 'unresolved') {
+    toolchain = lisgyToPortgraphToolchain
+  } else if (req.query.type === 'svg') {
+    toolchain = lisgyToSvgToolchain
+  } else {
+    toolchain = lisgyToResolvedPortgraphToolchain
+  }
 
-  // parseLisgy(req.body, true)
-  // .then((graph) => graphlib.json.read(graph))
-  // .then((graph) => {
-  //   if (req.query.type === 'unresolved') {
-  //     res.json({
-  //       status: 'success',
-  //       graph: graphlib.json.write(graph)
-  //     }).end()
-  //   } else {
-  //     return buggyResolve(graph, componentLibrary.get)
-  //     .then((graph) => {
-  //       if (req.query.type === 'svg') {
-  //         return graphify(asKGraph(graph))
-  //         .then((svg) => res.header('Content-Type', 'image/svg+xml').send(svg).end())
-  //       } else if (req.query.type === 'go') {
-  //         // TODO
-  //       } else {
-  //         res.json({
-  //           status: 'success',
-  //           graph: graphlib.json.write(graph)
-  //         }).end()
-  //       }
-  //     })
-  //   }
-  // })
-  // .catch((err) => {
-  //   res.json({
-  //     status: 'error',
-  //     error: err
-  //   }).end()
-  // })
+  toolchain
+  .then((sequence) => runToolchain(sequence, req.body, NPM))
+  .then((output) => {
+    if (req.query.type === 'svg') {
+      res.header('Content-Type', 'image/svg+xml').send(output).end()
+    } else {
+      res.json({
+        status: 'success',
+        graph: JSON.parse(output)
+      }).end()
+    }
+  })
+  .catch((e) => {
+    console.error(e)
+    res.status(500).json({
+      status: 'error',
+      error: e
+    }).end()
+  })
 })
 
 if (process.env.NODE_ENV !== 'production') {
