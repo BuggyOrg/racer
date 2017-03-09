@@ -13,7 +13,7 @@ import * as NPM from '@buggyorg/buggy/lib/npm/cacheCli'
 const app = express()
 app.use(bodyParser.text({ limit: '1MB' }))
 
-const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_COMPONENT_LIBRARY_HOST || 'http://localhost:9200'))
+const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_LIBRARY_HOST || 'http://localhost:9200'))
 
 // cache the toolchains
 let lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
