@@ -19,6 +19,15 @@ const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_L
 let lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
 let lisgyToResolvedPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM)
 let lisgyToSvgToolchain = toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM)
+lisgyToPortgraphToolchain.catch((e) => {
+  console.error('Could not prepare lisgy -> portgraph toolchain', e)
+})
+lisgyToResolvedPortgraphToolchain.catch((e) => {
+  console.error('Could not prepare lisgy -> resolved portgraph toolchain', e)
+})
+lisgyToSvgToolchain.catch((e) => {
+  console.error('Could not prepare lisgy -> svg toolchain', e)
+})
 
 app.post('/api/lisgy/parse', (req, res) => {
   if (!req.body) {
