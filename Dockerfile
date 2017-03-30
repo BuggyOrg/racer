@@ -21,6 +21,7 @@ ENV NODE_ENV production
 
 # build the app
 RUN npm run build
+RUN git config --local url.https://github.com/.insteadOf git://github.com/
 
 ADD entrypoint.sh .
 RUN chmod 755 ./entrypoint.sh
