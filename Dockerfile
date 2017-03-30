@@ -24,6 +24,7 @@ RUN npm run build
 
 # fix issues fetching npm packages with git (e.g. jsedn)
 RUN git config --local url.https://github.com/.insteadOf git://github.com/
+ENV GIT_ASKPASS "/bin/true"
 
 ADD entrypoint.sh .
 RUN chmod 755 ./entrypoint.sh
