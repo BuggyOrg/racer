@@ -47,7 +47,7 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "dependencies": {
-    "@buggyorg/buggy": "~0.2.0-pre.5",
+    "@buggyorg/buggy": "^0.2.0-pre.6",
     "@buggyorg/library-client": "^0.4.2",
     "@buggyorg/lisgy": "^0.1.8",
     "body-parser": "^1.15.1",

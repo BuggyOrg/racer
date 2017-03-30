@@ -17,8 +17,8 @@ const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_L
 
 // cache the toolchains (and only prepare one toolchain at a time)
 let lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
-let lisgyToResolvedPortgraphToolchain = lisgyToPortgraphToolchain.then(() => toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM))
-let lisgyToSvgToolchain = lisgyToResolvedPortgraphToolchain.then(() => toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM))
+let lisgyToResolvedPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM)
+let lisgyToSvgToolchain = toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM)
 lisgyToPortgraphToolchain.catch((e) => {
   console.error('Could not prepare lisgy -> portgraph toolchain', e)
 })
