@@ -16,27 +16,18 @@ app.use(bodyParser.text({ limit: '1MB' }))
 const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_LIBRARY_HOST || 'http://localhost:9200'))
 
 // cache the toolchains (and only prepare one toolchain at a time)
-let lisgyToPortgraphToolchain = new Promise(() => {})
-let lisgyToResolvedPortgraphToolchain = new Promise(() => {})
-let lisgyToSvgToolchain = new Promise(() => {})
-lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
-lisgyToPortgraphToolchain.then(() => {
-  lisgyToResolvedPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM)
-  lisgyToResolvedPortgraphToolchain.then(() => {
-    lisgyToSvgToolchain = toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM)
-    lisgyToSvgToolchain.catch((e) => {
-      console.error('Could not prepare lisgy -> svg toolchain', e)
-    })
-  })
-  lisgyToResolvedPortgraphToolchain.catch((e) => {
-    console.error('Could not prepare lisgy -> resolved portgraph toolchain', e)
-  })
-})
+let lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
+let lisgyToResolvedPortgraphToolchain = lisgyToPortgraphToolchain.then(() => toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM))
+let lisgyToSvgToolchain = lisgyToResolvedPortgraphToolchain.then(() => toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM))
 lisgyToPortgraphToolchain.catch((e) => {
   console.error('Could not prepare lisgy -> portgraph toolchain', e)
 })
-
-
+lisgyToResolvedPortgraphToolchain.catch((e) => {
+  console.error('Could not prepare lisgy -> resolved portgraph toolchain', e)
+})
+lisgyToSvgToolchain.catch((e) => {
+  console.error('Could not prepare lisgy -> svg toolchain', e)
+})
 
 app.post('/api/lisgy/parse', (req, res) => {
   if (!req.body) {
