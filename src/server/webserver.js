@@ -1,3 +1,5 @@
+import path from 'path'
+import fs from 'fs'
 import express from 'express'
 import bodyParser from 'body-parser'
 import configureWebpack from './configureWebpack'
@@ -45,8 +47,7 @@ export default function startWebserver (port, options = {}) {
   } else {
     app.use(express.static(path.join(__dirname, '..', '..', 'build')))
     app.get('*', (req, res) => {
-      res.write(fs.readFileSync(path.join(__dirname, '..', '..', 'build', 'index.html')))
-      res.end()
+      res.sendFile(path.join(__dirname, '..', '..', 'build', 'index.html'))
     })
   }
 
