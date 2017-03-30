@@ -3,7 +3,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import configureWebpack from './configureWebpack'
 
-export default function startWebserver (port, options = {}) {
+export default function startWebserver (port, { toolchains }) {
   const app = express()
   app.use(bodyParser.text({ limit: '1MB' }))
   app.post('/api/lisgy/parse', (req, res) => {
@@ -13,11 +13,11 @@ export default function startWebserver (port, options = {}) {
 
     let toolchain
     if (req.query.type === 'unresolved') {
-      toolchain = lisgyToPortgraphToolchain
+      toolchain = toolchains.lisgyToPortgraph
     } else if (req.query.type === 'svg') {
-      toolchain = lisgyToSvgToolchain
+      toolchain = toolchains.lisgyToSvg
     } else {
-      toolchain = lisgyToResolvedPortgraphToolchain
+      toolchain = toolchains.lisgyToResolvedPortgraph
     }
 
     runToolchain(toolchain, req.body, NPM)

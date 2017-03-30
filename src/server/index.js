@@ -24,6 +24,10 @@ Promise.all([lisgyToPortgraphToolchain, lisgyToResolvedPortgraphToolchain, lisgy
 .then((toolchains) => {
   console.log('Toolchains are ready')
   startWebserver(process.env.PORT || 3000, {
-    toolchains
+    toolchains: {
+      lisgyToPortgraph: toolchains[0],
+      lisgyToResolvedPortgraph: toolchains[1],
+      lisgyToSvg: toolchains[2]
+    }
   })
 })
