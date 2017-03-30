@@ -21,6 +21,8 @@ ENV NODE_ENV production
 
 # build the app
 RUN npm run build
+
+# fix issues fetching npm packages with git (e.g. jsedn)
 RUN git config --local url.https://github.com/.insteadOf git://github.com/
 
 ADD entrypoint.sh .
