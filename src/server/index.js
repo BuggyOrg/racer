@@ -16,9 +16,9 @@ app.use(bodyParser.text({ limit: '1MB' }))
 const getComponentLibrary = Promise.resolve(connectToLibrary(process.env.BUGGY_LIBRARY_HOST || 'http://localhost:9200'))
 
 // cache the toolchains (and only prepare one toolchain at a time)
-let lisgyToPortgraphToolchain
-let lisgyToResolvedPortgraphToolchain
-let lisgyToSvgToolchain
+let lisgyToPortgraphToolchain = new Promise(() => {})
+let lisgyToResolvedPortgraphToolchain = new Promise(() => {})
+let lisgyToSvgToolchain = new Promise(() => {})
 lisgyToPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', [], toolchain, NPM)
 lisgyToPortgraphToolchain.then(() => {
   lisgyToResolvedPortgraphToolchain = toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM)
