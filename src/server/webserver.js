@@ -31,6 +31,16 @@ export default function startWebserver (port, { toolchains }) {
       } else if (req.query.type === 'svg') {
         const output = await runToolchain(toolchains.lisgyToSvg, req.body, NPM)
         res.header('Content-Type', 'image/svg+xml').send(output).end()
+      } else if (req.query.type === 'all') {
+        const unresolved = await runToolchain(toolchains.lisgyToPortgraph, req.body, NPM)
+        const resolved = await runToolchain(toolchains.resolvePortgraph, unresolved, NPM)
+        const svg = await runToolchain(toolchains.resolvedPortgraphToSvg, resolved, NPM)
+        res.json({
+          status: 'success',
+          unresolved,
+          resolved,
+          svg
+        }).end()
       } else {
         res.status(400).end()
       }
