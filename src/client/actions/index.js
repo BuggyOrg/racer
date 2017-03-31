@@ -15,10 +15,10 @@ export function compileProgram (code) {
          .post('/api/lisgy/parse?type=svg', new Blob([code], { type: 'text/plain' }))
     .then(([[, resolved], [, unresolved], [, svg]]) => {
       if (resolved.status === 'success') {
-        dispatch({ type: SET_CODE_ERRORS, errors: []})
+        dispatch({ type: SET_CODE_ERRORS, errors: [] })
         dispatch({ type: SET_RESOLVED_GRAPH, graph: resolved.graph })
       } else {
-        dispatch({ type: SET_CODE_ERRORS, errors: [resolved.error]})
+        dispatch({ type: SET_CODE_ERRORS, errors: [resolved.error] })
         dispatch({ type: SET_RESOLVED_GRAPH_LOADING, loading: false })
       }
       if (unresolved.status === 'success') {

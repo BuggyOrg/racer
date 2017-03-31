@@ -6,8 +6,6 @@ import IconButton from 'material-ui/IconButton'
 import racerTheme from './theme'
 import BuggyIcon from './icons/BuggyIcon'
 import MainMenu from '../containers/MainMenu'
-import IconMenu from 'material-ui/IconMenu'
-import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 const darkMuiTheme = getMuiTheme(racerTheme)

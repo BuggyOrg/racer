@@ -36,7 +36,7 @@ const config = {
     new ExtractTextPlugin('[name].css', { allChunks: true }),
     new CopyWebpackPlugin([{
       from: 'node_modules/monaco-editor/min/vs',
-      to: 'vs',
+      to: 'vs'
     }])
   ],
   module: {

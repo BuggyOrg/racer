@@ -9,7 +9,7 @@ export default function (monaco) {
     brackets: [
       ['(', ')'],
       ['[', ']'],
-      ['{', '}'],
+      ['{', '}']
     ],
     comments: {
       lineComment: ';'
@@ -18,7 +18,7 @@ export default function (monaco) {
       { open: '(', close: ')' },
       { open: '[', close: ']' },
       { open: '{', close: '}' },
-      { open: '"', close: '"' },
+      { open: '"', close: '"' }
     ]
   })
 }

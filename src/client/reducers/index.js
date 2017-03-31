@@ -19,29 +19,29 @@ export function codeErrors (state = [], action) {
       const { errorMessage, errorLocation } = checkSyntax(action.code || '')
       return state.filter((e) => e.type !== 'syntax')
                   .concat(errorMessage ? [{
-        location: {
-          startCol: errorLocation.startCol,
-          startLine: errorLocation.startLine,
-          endCol: errorLocation.endLine === errorLocation.startLine ? Math.max(errorLocation.endCol, errorLocation.startCol + 1) : errorLocation.endCol,
-          endLine: errorLocation.endLine,
-        },
-        message: errorMessage,
-        type: 'syntax'
-      }] : [])
+                    location: {
+                      startCol: errorLocation.startCol,
+                      startLine: errorLocation.startLine,
+                      endCol: errorLocation.endLine === errorLocation.startLine ? Math.max(errorLocation.endCol, errorLocation.startCol + 1) : errorLocation.endCol,
+                      endLine: errorLocation.endLine
+                    },
+                    message: errorMessage,
+                    type: 'syntax'
+                  }] : [])
     }
     case SET_CODE_ERRORS: {
       return state.filter((e) => e.type === 'syntax')
                   .concat(action.errors.filter((e) => e.errorMessage).map(({ errorMessage, errorLocation }) => {
-        return {
-          location: {
-            startCol: errorLocation.startCol,
-            startLine: errorLocation.startLine,
-            endCol: errorLocation.endLine === errorLocation.startLine ? Math.max(errorLocation.endCol, errorLocation.startCol + 1) : errorLocation.endCol,
-            endLine: errorLocation.endLine,
-          },
-          message: errorMessage
-        }
-      }))
+                    return {
+                      location: {
+                        startCol: errorLocation.startCol,
+                        startLine: errorLocation.startLine,
+                        endCol: errorLocation.endLine === errorLocation.startLine ? Math.max(errorLocation.endCol, errorLocation.startCol + 1) : errorLocation.endCol,
+                        endLine: errorLocation.endLine
+                      },
+                      message: errorMessage
+                    }
+                  }))
     }
     default:
       return state

@@ -9,8 +9,6 @@ import Sidebar from '../../components/editor/Sidebar'
 import '../../res/resizer.css'
 import { setLispCode, compileProgram } from '../../actions'
 
-let cbaInitialized = false
-
 class EditorContainer extends React.Component {
   constructor (props) {
     super(props)
@@ -18,18 +16,19 @@ class EditorContainer extends React.Component {
     this.state = {
       percentageSize: parseFloat(localStorage.getItem('splitPosRelative')) || 0.5
     }
+    this.handleResize = this.handleResize.bind(this)
   }
 
-  componentDidMount() {
+  componentDidMount () {
     window.addEventListener('resize', this.handleResize)
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.handleResize)
     this.splitPane = null
   }
 
-  handleResize = () => {
+  handleResize () {
     this.splitPane.setState({
       draggedSize: this.state.percentageSize * window.innerWidth
     })
@@ -40,7 +39,7 @@ class EditorContainer extends React.Component {
     this.sidebar.layout()
   }
 
-  onDragFinished() {
+  onDragFinished () {
     this.setState({
       percentageSize: this.splitPane.state.draggedSize / window.innerWidth
     })
@@ -67,7 +66,7 @@ class EditorContainer extends React.Component {
       <div>
         <SplitPane
           split='vertical'
-          ref={(splitPane) => this.splitPane = splitPane}
+          ref={(splitPane) => { this.splitPane = splitPane }}
           onDragFinished={() => this.onDragFinished()}
           defaultSize={this.state.percentageSize * window.innerWidth}
           minSize={200}
@@ -80,7 +79,7 @@ class EditorContainer extends React.Component {
               annotations={this.props.codeErrors}
               markers={this.props.codeMarkers}
               value={code}
-              ref={(editor) => this.lispEditor = editor}
+              ref={(editor) => { this.lispEditor = editor }}
             />
           </FileDragAndDrop>
           <Sidebar
@@ -90,7 +89,7 @@ class EditorContainer extends React.Component {
             unresolvedGraphLoading={unresolvedGraph.loading}
             controlFlowGraph={controlFlowGraph.value}
             controlFlowGraphLoading={controlFlowGraph.loading}
-            ref={(sidebar) => this.sidebar = sidebar}
+            ref={(sidebar) => { this.sidebar = sidebar }}
           />
         </SplitPane>
       </div>

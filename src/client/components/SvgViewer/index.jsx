@@ -1,3 +1,4 @@
+/* global DOMParser, XMLSerializer */
 import * as React from 'react'
 import _ from 'lodash'
 
@@ -62,7 +63,7 @@ export default class SvgViewer extends React.Component {
       this.setState({
         transform: scaleRelative(0.9, this.state.mousePosition.x - this.state.transform[0], this.state.mousePosition.y - this.state.transform[1], this.state.transform)
       })
-    } else if (event.deltaY < 0) {      
+    } else if (event.deltaY < 0) {
       this.setState({
         transform: scaleRelative(1.1, this.state.mousePosition.x - this.state.transform[0], this.state.mousePosition.y - this.state.transform[1], this.state.transform)
       })
@@ -82,7 +83,7 @@ export default class SvgViewer extends React.Component {
     }
 
     const parser = new DOMParser()
-    const doc = parser.parseFromString(svgString, "image/svg+xml")
+    const doc = parser.parseFromString(svgString, 'image/svg+xml')
     const svg = doc.querySelector('svg')
     if (!svg) {
       return
@@ -108,7 +109,7 @@ export default class SvgViewer extends React.Component {
     return (
       <div
         style={this.props.style}
-        ref={(r) => this._svgContainer = r}
+        ref={(r) => { this._svgContainer = r }}
         dangerouslySetInnerHTML={{__html: svg}}
         onMouseMove={(event) => this.handleMouseMove(event)}
         onMouseDown={(event) => this.handleMouseDown(event)}

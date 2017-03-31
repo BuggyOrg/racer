@@ -9,6 +9,7 @@ import registerLisgyLanguage from './monacoIntegration/lisgy'
 export default class EnhancedEditor extends Component {
   constructor (props) {
     super(props)
+    this.editorDidMount = this.editorDidMount.bind(this)
   }
 
   layout () {
@@ -21,7 +22,7 @@ export default class EnhancedEditor extends Component {
     this.editor = null
   }
 
-  editorDidMount = (editor, monaco) => {
+  editorDidMount (editor, monaco) {
     this.editor = editor
     if (this.props.editorDidMount) {
       this.props.editorDidMount(editor, monaco)

@@ -9,38 +9,38 @@ import * as NPM from '@buggyorg/buggy/lib/npm/cacheCli'
 export default function startWebserver (port, { toolchains }) {
   const app = express()
   app.use(bodyParser.text({ limit: '1MB' }))
-  app.post('/api/lisgy/parse', (req, res) => {
+
+  app.post('/api/lisgy/parse', async (req, res) => {
     if (!req.body) {
       return res.status(400).end()
     }
 
-    let toolchain
-    if (req.query.type === 'unresolved') {
-      toolchain = toolchains.lisgyToPortgraph
-    } else if (req.query.type === 'svg') {
-      toolchain = toolchains.lisgyToSvg
-    } else {
-      toolchain = toolchains.lisgyToResolvedPortgraph
-    }
-
-    runToolchain(toolchain, req.body, NPM)
-    .then((output) => {
-      if (req.query.type === 'svg') {
-        res.header('Content-Type', 'image/svg+xml').send(output).end()
-      } else {
+    try {
+      if (req.query.type === 'unresolved') {
+        const output = await runToolchain(toolchains.lisgyToPortgraph, req.body, NPM)
         res.json({
           status: 'success',
           graph: JSON.parse(output)
         }).end()
+      } else if (req.query.type === 'resolved') {
+        const output = await runToolchain(toolchains.lisgyToResolvedPortgraph, req.body, NPM)
+        res.json({
+          status: 'success',
+          graph: JSON.parse(output)
+        }).end()
+      } else if (req.query.type === 'svg') {
+        const output = await runToolchain(toolchains.lisgyToSvg, req.body, NPM)
+        res.header('Content-Type', 'image/svg+xml').send(output).end()
+      } else {
+        res.status(400).end()
       }
-    })
-    .catch((e) => {
+    } catch (e) {
       console.error(e)
       res.status(500).json({
         status: 'error',
         error: e
       }).end()
-    })
+    }
   })
 
   if (process.env.NODE_ENV !== 'production') {

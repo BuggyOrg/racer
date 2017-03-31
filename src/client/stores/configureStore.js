@@ -3,7 +3,7 @@ import thunk from 'redux-thunk'
 import { routerReducer } from 'react-router-redux'
 import * as reducers from '../reducers'
 
-function createRootReducer(reducers) {
+function createRootReducer (reducers) {
   return combineReducers({ ...reducers, routing: routerReducer })
 }
 

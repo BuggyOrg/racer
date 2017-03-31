@@ -1,7 +1,7 @@
+/* global File, FileReader */
 import * as React from 'react'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import Divider from 'material-ui/Divider'
 import Folder from 'material-ui/svg-icons/file/folder'
 import Save from 'material-ui/svg-icons/content/save'
@@ -10,6 +10,11 @@ import { saveAs } from 'file-saver'
 import { setLispCode, compileProgram, togglePowerMode } from '../actions'
 
 class MainMenu extends React.Component {
+  constructor (props) {
+    super(props)
+    this.handleShortcutKeys = this.handleShortcutKeys.bind(this)
+  }
+
   componentDidMount () {
     window.addEventListener('keydown', this.handleShortcutKeys)
   }
@@ -18,7 +23,7 @@ class MainMenu extends React.Component {
     window.removeEventListener('keydown', this.handleShortcutKeys)
   }
 
-  handleShortcutKeys = (e) => {
+  handleShortcutKeys (e) {
     if (e.key === 'o' && e.ctrlKey) {
       this.openInput.click()
       e.preventDefault()
@@ -32,7 +37,7 @@ class MainMenu extends React.Component {
     const files = e.target.files
     if (files.length > 0) {
       const reader = new FileReader()
-      reader.addEventListener('loadend', (event) => {    
+      reader.addEventListener('loadend', (event) => {
         this.props.dispatch(setLispCode(reader.result))
         this.props.dispatch(compileProgram())
       })
@@ -41,11 +46,11 @@ class MainMenu extends React.Component {
   }
 
   handleSaveFile () {
-    saveAs(new File([this.props.code], "code.clj", { type: 'text/plain;charset=utf-8' }))
+    saveAs(new File([this.props.code], 'code.clj', { type: 'text/plain;charset=utf-8' }))
   }
 
   handleExportGraph () {
-    saveAs(new File([this.props.controlFlowGraph], "code.svg", { type: 'image/svg+xml;charset=utf-8' }))
+    saveAs(new File([this.props.controlFlowGraph], 'code.svg', { type: 'image/svg+xml;charset=utf-8' }))
   }
 
   render () {
@@ -59,27 +64,27 @@ class MainMenu extends React.Component {
           desktop
         >
           <MenuItem
-            primaryText="Open"
-            secondaryText="Ctrl + O"
+            primaryText='Open'
+            secondaryText='Ctrl + O'
             leftIcon={<Folder />}
             onTouchTap={(e) => { this.openInput.click(); e.stopPropagation() }}
           />
           <MenuItem
-            primaryText="Save"
-            secondaryText="Ctrl + S"
+            primaryText='Save'
+            secondaryText='Ctrl + S'
             leftIcon={<Save />}
             onTouchTap={() => this.handleSaveFile()}
           />
           <Divider />
           <MenuItem
-            primaryText="Export graph" 
+            primaryText='Export graph'
             insetChildren
             onTouchTap={() => this.handleExportGraph()}
             disabled={!this.props.controlFlowGraph}
           />
           <Divider />
           <MenuItem
-            primaryText="Power mode"
+            primaryText='Power mode'
             insetChildren
             checked={this.props.powerMode}
             onTouchTap={() => this.props.dispatch(togglePowerMode())}
@@ -90,10 +95,10 @@ class MainMenu extends React.Component {
           style={{ position: 'fixed', top: -200 }}
         >
           <input
-            type="file"
-            ref={(ref) => this.openInput = ref}
+            type='file'
+            ref={(ref) => { this.openInput = ref }}
             onChange={(e) => this.handleOpenFile(e)}
-            accept=".clj,text/*"
+            accept='.clj,text/*'
           />
         </div>
       </div>

@@ -51,7 +51,7 @@ export default class extends React.Component {
               style={{ height: '100%', width: '100%' }}
             >
               <EnhancedEditor
-                ref={(editor) => this.jsonEditor = editor}
+                ref={(editor) => { this.jsonEditor = editor }}
                 uniqueId='sidebarJson'
                 language='json'
                 options={{ folding: true }}
@@ -64,7 +64,7 @@ export default class extends React.Component {
               style={{ height: '100%', width: '100%' }}
             >
               <EnhancedEditor
-                ref={(editor) => this.resolvedJsonEditor = editor}
+                ref={(editor) => { this.resolvedJsonEditor = editor }}
                 uniqueId='sidebarResolvedJson'
                 language='json'
                 options={{ folding: true }}

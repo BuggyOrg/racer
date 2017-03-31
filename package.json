@@ -7,14 +7,13 @@
     "start": "node lib/server/index.js",
     "build": "babel src/server -d lib/server && webpack",
     "build-server": "babel src/server -d lib/server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "standard"
   },
   "author": "Maik Marschner",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.7.7",
     "babel-core": "~6.4.5",
-    "babel-eslint": "^6.0.4",
     "babel-loader": "~6.2.2",
     "babel-plugin-external-helpers-2": "~6.3.13",
     "babel-plugin-transform-runtime": "^6.7.5",
@@ -34,7 +33,7 @@
     "react-addons-test-utils": "~15.0.0",
     "react-hot-loader": "^3.0.0-beta.6",
     "redux-devtools": "^3.1.1",
-    "standard": "^6.0.8",
+    "standard": "^9.0.2",
     "style-loader": "~0.13.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",

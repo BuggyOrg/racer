@@ -16,14 +16,11 @@ import './res/style.css'
 const store = configureStore({})
 const history = syncHistoryWithStore(browserHistory, store)
 
-render(
-  (
+render((
   <Provider store={store}>
     <Router
       history={history}
       routes={createRootRoute(store)}
-    />
+  />
   </Provider>
-  ),
-  document.getElementById('react-target')
-)
+), document.getElementById('react-target'))
