@@ -1,4 +1,4 @@
-/* global Blob */
+/* global Blob, localStorage */
 import qwest from 'qwest'
 import { SET_RESOLVED_GRAPH, SET_CODE, SET_RESOLVED_GRAPH_LOADING,
          SET_UNRESOLVED_GRAPH, SET_UNRESOLVED_GRAPH_LOADING,
@@ -34,6 +34,7 @@ export function compileProgram (code) {
 }
 
 export function setLispCode (code) {
+  localStorage.setItem('code', code)
   return { type: SET_CODE, code }
 }
 

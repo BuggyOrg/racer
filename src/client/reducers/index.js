@@ -1,10 +1,11 @@
+/* global localStorage */
 import { SET_CODE, SET_RESOLVED_GRAPH, SET_RESOLVED_GRAPH_LOADING,
          SET_UNRESOLVED_GRAPH, SET_UNRESOLVED_GRAPH_LOADING,
          SET_CONTROL_FLOW_GRAPH, SET_CONTROL_FLOW_GRAPH_LOADING,
          SET_CODE_ERRORS, TOGGLE_POWER_MODE } from '../actions/constants'
 import { checkSyntax } from '@buggyorg/lisgy'
 
-export function code (state = '', action) {
+export function code (state = localStorage.getItem('code') || '', action) {
   switch (action.type) {
     case SET_CODE:
       return action.code || ''
