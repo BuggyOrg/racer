@@ -24,7 +24,7 @@ const config = {
     new FaviconsWebpackPlugin({
       logo: path.join(__dirname, 'src', 'client', 'res', 'logo.png'),
       prefix: 'icons-[hash]/',
-      background: '#00bcd4',
+      background: '#4CAF50',
       emitStats: false,
       persistentCache: false
     }),
