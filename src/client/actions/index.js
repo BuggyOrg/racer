@@ -10,29 +10,18 @@ export function compileProgram (code) {
     dispatch({ type: SET_RESOLVED_GRAPH_LOADING, loading: true })
     dispatch({ type: SET_UNRESOLVED_GRAPH_LOADING, loading: true })
     dispatch({ type: SET_CONTROL_FLOW_GRAPH_LOADING, loading: true })
-    qwest.post('/api/lisgy/parse', new Blob([code], { type: 'text/plain' }))
-         .post('/api/lisgy/parse?type=unresolved', new Blob([code], { type: 'text/plain' }))
-         .post('/api/lisgy/parse?type=svg', new Blob([code], { type: 'text/plain' }))
-    .then(([[, resolved], [, unresolved], [, svg]]) => {
-      if (resolved.status === 'success') {
-        dispatch({ type: SET_CODE_ERRORS, errors: [] })
-        dispatch({ type: SET_RESOLVED_GRAPH, graph: resolved.graph })
-      } else {
-        dispatch({ type: SET_CODE_ERRORS, errors: [resolved.error] })
-        dispatch({ type: SET_RESOLVED_GRAPH_LOADING, loading: false })
-      }
-      if (unresolved.status === 'success') {
-        dispatch({ type: SET_UNRESOLVED_GRAPH, graph: unresolved.graph })
-      } else {
-        dispatch({ type: SET_UNRESOLVED_GRAPH_LOADING, loading: false })
-      }
-      if (svg.status !== 'error') {
-        dispatch({ type: SET_CONTROL_FLOW_GRAPH, graph: svg })
-      } else {
-        dispatch({ type: SET_CONTROL_FLOW_GRAPH_LOADING, loading: false })
-      }
+
+    qwest.post('/api/lisgy/parse?type=all', new Blob([code], { type: 'text/plain' }))
+    .then((xhr, { unresolved, resolved, svg }) => {
+      dispatch({ type: SET_CODE_ERRORS, errors: [] })
+      dispatch({ type: SET_UNRESOLVED_GRAPH, graph: unresolved.graph })
+      dispatch({ type: SET_RESOLVED_GRAPH, graph: resolved })
+      dispatch({ type: SET_CONTROL_FLOW_GRAPH, graph: svg })
     })
-    .catch(() => {
+    .catch((e, xhr, response) => {
+      dispatch({ type: SET_CODE_ERRORS, errors: [response.error] })
+    })
+    .complete(() => {
       dispatch({ type: SET_RESOLVED_GRAPH_LOADING, loading: false })
       dispatch({ type: SET_UNRESOLVED_GRAPH_LOADING, loading: false })
       dispatch({ type: SET_CONTROL_FLOW_GRAPH_LOADING, loading: false })
