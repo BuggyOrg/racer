@@ -37,8 +37,8 @@ export default function startWebserver (port, { toolchains }) {
         const svg = await runToolchain(toolchains.resolvedPortgraphToSvg, resolved, NPM)
         res.json({
           status: 'success',
-          unresolved,
-          resolved,
+          unresolved: JSON.parse(unresolved),
+          resolved: JSON.parse(resolved),
           svg
         }).end()
       } else {

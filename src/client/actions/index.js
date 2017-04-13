@@ -14,7 +14,7 @@ export function compileProgram (code) {
     qwest.post('/api/lisgy/parse?type=all', new Blob([code], { type: 'text/plain' }))
     .then((xhr, { unresolved, resolved, svg }) => {
       dispatch({ type: SET_CODE_ERRORS, errors: [] })
-      dispatch({ type: SET_UNRESOLVED_GRAPH, graph: unresolved.graph })
+      dispatch({ type: SET_UNRESOLVED_GRAPH, graph: unresolved })
       dispatch({ type: SET_RESOLVED_GRAPH, graph: resolved })
       dispatch({ type: SET_CONTROL_FLOW_GRAPH, graph: svg })
     })
