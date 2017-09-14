@@ -16,11 +16,11 @@ export function compileProgram (code) {
       previousCompileRequest.abort()
     }
     previousCompileRequest = qwest.post('/api/lisgy/parse?type=all', new Blob([code], { type: 'text/plain' }))
-    .then((xhr, { unresolved, resolved, svg }) => {
+    .then((xhr, { unresolved, resolved, kgraph }) => {
       dispatch({ type: SET_CODE_ERRORS, errors: [] })
       dispatch({ type: SET_UNRESOLVED_GRAPH, graph: unresolved })
       dispatch({ type: SET_RESOLVED_GRAPH, graph: resolved })
-      dispatch({ type: SET_CONTROL_FLOW_GRAPH, graph: svg })
+      dispatch({ type: SET_CONTROL_FLOW_GRAPH, graph: kgraph })
     })
     .catch((e, xhr, response) => {
       dispatch({ type: SET_CODE_ERRORS, errors: [response.error] })

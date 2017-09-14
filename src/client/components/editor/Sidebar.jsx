@@ -3,10 +3,10 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import SwipeableViews from 'react-swipeable-views'
+import { GraphViewer } from '@buggyorg/graphify-react'
 import { inverted } from '../theme'
 import EnhancedEditor from './EnhancedEditor'
 import LoadingPanel from '../common/LoadingPanel'
-import SvgViewer from '../SvgViewer'
 
 const invertedTheme = getMuiTheme(inverted)
 
@@ -76,9 +76,9 @@ export default class extends React.Component {
               style={{ height: '100%', width: '100%' }}
               loading={this.props.controlFlowGraphLoading}
             >
-              <SvgViewer
+              <GraphViewer
                 style={{ height: '100%', width: '100%' }}
-                svg={this.props.controlFlowGraph}
+                kgraph={this.props.controlFlowGraph}
               />
             </LoadingPanel>
           </SwipeableViews>

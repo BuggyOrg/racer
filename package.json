@@ -47,6 +47,7 @@
   },
   "dependencies": {
     "@buggyorg/buggy": "^0.2.0-pre.8",
+    "@buggyorg/graphify-react": "^0.2.0",
     "@buggyorg/library-client": "^0.4.2",
     "@buggyorg/lisgy": "^0.1.8",
     "babel-runtime": "^6.23.0",

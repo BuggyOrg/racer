@@ -34,12 +34,12 @@ export default function startWebserver (port, { toolchains }) {
       } else if (req.query.type === 'all') {
         const unresolved = await runToolchain(toolchains.lisgyToPortgraph, req.body, NPM)
         const resolved = await runToolchain(toolchains.resolvePortgraph, unresolved, NPM)
-        const svg = await runToolchain(toolchains.resolvedPortgraphToSvg, resolved, NPM)
+        const kgraph = await runToolchain(toolchains.resolvedPortgraphToKGraph, resolved, NPM)
         res.json({
           status: 'success',
           unresolved: JSON.parse(unresolved),
           resolved: JSON.parse(resolved),
-          svg
+          kgraph: JSON.parse(kgraph)
         }).end()
       } else {
         res.status(400).end()

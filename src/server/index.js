@@ -11,7 +11,7 @@ const toolchains = {
   lisgyToResolvedPortgraph: toolchainSequence('lisgy', 'portgraph', ['resolve'], toolchain, NPM),
   lisgyToSvg: toolchainSequence('lisgy', 'svg', ['resolve'], toolchain, NPM),
   resolvePortgraph: toolchainSequence('portgraphJSON', 'portgraph', ['resolve'], toolchain, NPM),
-  resolvedPortgraphToSvg: toolchainSequence('portgraphJSON', 'svg', [], toolchain, NPM)
+  resolvedPortgraphToKGraph: toolchainSequence('portgraphJSON', 'kgraph', [], toolchain, NPM)
 }
 
 console.log('Preparing toolchains…')
